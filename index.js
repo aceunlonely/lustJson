@@ -364,7 +364,8 @@ var get = function(lustJson,sxg,options){
             }
         }
         //是否串行 is Serial 默认并行
-        if(options.serial){
+        //todo
+        if(!options.serial){
             options =Object.assign({}, options)
             options.findOne = true
             cylceAllLustSerial(options)
