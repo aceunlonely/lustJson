@@ -33,3 +33,17 @@ var startWith=function(str,s){
 exports.Type = Type
 exports.endWith =endWith
 exports.startWith = startWith
+
+
+exports.promiseAllArray =  (arr,fn,completeFn,onReject)=>{
+   if(!Type.isArray(arr)){
+       arr = [arr]
+   }
+   var pArray = new Array()
+   arr.forEach(element => {
+       pArray.push(fn(element))
+   });
+   Promise.all(pArray).then(values=>{
+       completeFn(values)
+   },onReject)
+}

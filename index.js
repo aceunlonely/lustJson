@@ -363,15 +363,105 @@ var get = function(lustJson,sxg,options){
                 }
             }
         }
+
+        //parallel
+        function cylceAllLustParallel(options){
+            var lustInfos = getLusts(iJson,null,null,null,sxg,options)
+            if(lustInfos.length >0){
+                //todo 
+                for(var i =0;i<lustInfos.length;i++){
+
+                }
+            }
+            else{
+                //here no lust now , redo logic
+                if(sxg.afterSatifyAllLust){
+                    var pOrNot = sxg.afterSatifyAllLust(iJson,options)
+                    //这边是是否重新make的逻辑，可扩展其他方式
+                    if(pOrNot){
+                        if(pOrNot.then){
+                            pOrNot.then(result =>{
+                                if(result.isRemakeLustJson){
+                                    iJson = Object.assign({}, json)
+                                    cylceAllLustParallel(options)
+                                }
+                                else{
+                                    r(iJson)
+                                }
+                            },j)
+                        }
+                        else
+                        {
+                            if(pOrNot.isRemakeLustJson){
+                                iJson = Object.assign({}, json)
+                                cylceAllLustParallel(options)
+                            }
+                            else
+                            {
+                                r(iJson)
+                            }
+                        }
+                    }
+                    else
+                        r(iJson)
+                }
+                else
+                {
+                    r(iJson)
+                }
+            }
+
+            if(firstLustInfo.length >0){
+                firstLustInfo = firstLustInfo[0]
+                if(sxg.beforeSatifyOneLust){
+                    var pOrNot = sxg.beforeSatifyOneLust(firstLustInfo,options)
+                    //判断是否是promise
+                    if(pOrNot && pOrNot.then){
+                        pOrNot.then(data =>{
+                            satifyOneLust(firstLustInfo,sxg,options).then(()=>{
+                                if(sxg.afterSatifyOneLust){
+                                    sxg.afterSatifyOneLust(firstLustInfo,options)
+                                }
+                                cylceAllLustSerial(options)
+                            })
+                        })
+                    }
+                    else{
+                        satifyOneLust(firstLustInfo,sxg,options).then(()=>{
+                            if(sxg.afterSatifyOneLust){
+                                sxg.afterSatifyOneLust(firstLustInfo,options)
+                            }
+                            cylceAllLustSerial(options)
+                        })
+                    }
+                }
+                else
+                {
+                    satifyOneLust(firstLustInfo,sxg,options).then(()=>{
+                        if(sxg.afterSatifyOneLust){
+                            sxg.afterSatifyOneLust(firstLustInfo,options)
+                        }
+                        cylceAllLustSerial(options)
+                    })
+                }
+                
+            }
+            else{
+               
+            }
+        }
+
         //是否串行 is Serial 默认并行
-        //todo
-        if(!options.serial){
+        if(options.serial){
             options =Object.assign({}, options)
             options.findOne = true
             cylceAllLustSerial(options)
         }
         else{
             //并行lust todo
+            options =Object.assign({}, options)
+            options.findOne = false
+            cylceAllLustSerial(options)
         }
     });
 }
