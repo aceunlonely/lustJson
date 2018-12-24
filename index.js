@@ -303,8 +303,8 @@ var get = function(lustJson,sxg,options){
                                     sxg.afterSatifyOneLust(firstLustInfo,options)
                                 }
                                 cylceAllLustSerial(options)
-                            })
-                        })
+                            },j)
+                        },j)
                     }
                     else{
                         satifyOneLust(firstLustInfo,sxg,options).then(()=>{
@@ -322,7 +322,7 @@ var get = function(lustJson,sxg,options){
                             sxg.afterSatifyOneLust(firstLustInfo,options)
                         }
                         cylceAllLustSerial(options)
-                    })
+                    },j)
                 }
                 
             }
@@ -340,7 +340,7 @@ var get = function(lustJson,sxg,options){
                                 else{
                                     r(iJson)
                                 }
-                            })
+                            },j)
                         }
                         else
                         {
@@ -368,10 +368,40 @@ var get = function(lustJson,sxg,options){
         function cylceAllLustParallel(options){
             var lustInfos = getLusts(iJson,null,null,null,sxg,options)
             if(lustInfos.length >0){
-                //todo 
-                for(var i =0;i<lustInfos.length;i++){
-
-                }
+                util.promiseAllArray(lustInfos,ele=>{
+                    return new Promise((rr,jj)=>{
+                        if(sxg.beforeSatifyOneLust){
+                            var pOrNot = sxg.beforeSatifyOneLust(ele,options)
+                            //判断是否是promise
+                            if(pOrNot && pOrNot.then){
+                                pOrNot.then(data =>{
+                                    satifyOneLust(ele,sxg,options).then(()=>{
+                                        if(sxg.afterSatifyOneLust){
+                                            sxg.afterSatifyOneLust(ele,options)
+                                        }
+                                        rr()
+                                    },jj)
+                                },jj)
+                            }else{
+                                satifyOneLust(firstLustInfo,sxg,options).then(()=>{
+                                    if(sxg.afterSatifyOneLust){
+                                        sxg.afterSatifyOneLust(firstLustInfo,options)
+                                    }
+                                    rr()
+                                },jj)
+                            }
+                        }else{
+                            satifyOneLust(firstLustInfo,sxg,options).then(()=>{
+                                if(sxg.afterSatifyOneLust){
+                                    sxg.afterSatifyOneLust(firstLustInfo,options)
+                                }
+                                rr()
+                            },jj)
+                        }
+                    })
+                },()=>{
+                    cylceAllLustParallel(options)
+                },j)
             }
             else{
                 //here no lust now , redo logic
@@ -411,44 +441,6 @@ var get = function(lustJson,sxg,options){
                 }
             }
 
-            if(firstLustInfo.length >0){
-                firstLustInfo = firstLustInfo[0]
-                if(sxg.beforeSatifyOneLust){
-                    var pOrNot = sxg.beforeSatifyOneLust(firstLustInfo,options)
-                    //判断是否是promise
-                    if(pOrNot && pOrNot.then){
-                        pOrNot.then(data =>{
-                            satifyOneLust(firstLustInfo,sxg,options).then(()=>{
-                                if(sxg.afterSatifyOneLust){
-                                    sxg.afterSatifyOneLust(firstLustInfo,options)
-                                }
-                                cylceAllLustSerial(options)
-                            })
-                        })
-                    }
-                    else{
-                        satifyOneLust(firstLustInfo,sxg,options).then(()=>{
-                            if(sxg.afterSatifyOneLust){
-                                sxg.afterSatifyOneLust(firstLustInfo,options)
-                            }
-                            cylceAllLustSerial(options)
-                        })
-                    }
-                }
-                else
-                {
-                    satifyOneLust(firstLustInfo,sxg,options).then(()=>{
-                        if(sxg.afterSatifyOneLust){
-                            sxg.afterSatifyOneLust(firstLustInfo,options)
-                        }
-                        cylceAllLustSerial(options)
-                    })
-                }
-                
-            }
-            else{
-               
-            }
         }
 
         //是否串行 is Serial 默认并行
@@ -461,7 +453,7 @@ var get = function(lustJson,sxg,options){
             //并行lust todo
             options =Object.assign({}, options)
             options.findOne = false
-            cylceAllLustSerial(options)
+            cylceAllLustParallel(options)
         }
     });
 }
