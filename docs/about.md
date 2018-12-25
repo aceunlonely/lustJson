@@ -21,18 +21,18 @@
 }
 ```
 
-2. but , some value ( or key )of json ,you dont know, like:
-     .age     we dont know her age
-     .isMan   we dont know her gender
-     .hobbies[1]   .hobbies[2]   we dont konw her other hobbies  but basketball
-     .lover.name we dont know her lover's name
-     .lover.age  we dont konw her lover's age
-     .lover.hobbies    we dont know her lover's hobbies but sing
-     .lover.sister.name   we dont know her lover's sister's name
-     .lover.height   we dont know her lover's height  is konwn actually
-     .height    we even dont know her height is konwn actually, and need be filled up
+2. but , some value ( or key )of json ,you dont know, like:  
+     .age     we dont know her age  
+     .isMan   we dont know her gender  
+     .hobbies[1]   .hobbies[2]   we dont konw her other hobbies  but basketball  
+     .lover.name we dont know her lover's name  
+     .lover.age  we dont konw her lover's age  
+     .lover.hobbies    we dont know her lover's hobbies but sing  
+     .lover.sister.name   we dont know her lover's sister's name  
+     .lover.height   we dont know her lover's height  is konwn actually  
+     .height    we even dont know her height is konwn actually, and need be filled up  
  
-3. you can describe by a json like:
+3. you can describe by a json like:  
 ```js
  {
     "name" : "LiSA",
@@ -95,12 +95,12 @@
 
 ```
 
-5. so 
-    they are lustjsons , we call the nodes
-    ( like "???"  "???(string)"  "???" : ""  {"isLust" : true,"remark" : "here is LiSA's lover's hobby", "type" : "string"}  )
-    the lust.  and the struct of lust , is defined by you own,
-    you need implement a SexyGril for your lust struct
+5. so   
+    they are lustjsons , we call the nodes  
+    ( like "???"  "???(string)"  "???" : ""  {"isLust" : true,"remark" : "here is LiSA's lover's hobby", "type" : "string"}  )  
+    the lust.  and the struct of lust , is defined by you own,  
+    you need implement a SexyGril for your lust struct  
 
-6. so it works like:
+6. so it works like:  
 [![avatar](https://raw.githubusercontent.com/aceunlonely/lustJson/master/docs/lustjson-sexygirl.jpg "link to html")](https://aceunlonely.github.io/lustJson/docs/lustjson-sexygirl.html)
 
