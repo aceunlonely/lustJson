@@ -5,8 +5,9 @@ from apijson  xget and uijson
 
 //is Serial 
 1. now it is default  serial , aim is not
-
-
+#  what is lustjson
+    details at [./docs/about.md](docs/about.md "about")
+    
 # how to use
 1. install
 ```shell
