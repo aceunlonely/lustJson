@@ -102,5 +102,5 @@
     you need implement a SexyGril for your lust struct
 
 6. so it works like:
-![avatar](/user/desktop/doge.png)
+[![avatar](docs/lustjson-sexygirl.jpg "link to html")](docs/lustjson-sexygirl.html)
 
