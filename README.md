@@ -1,4 +1,4 @@
-<div align=center>![avatar](https://raw.githubusercontent.com/aceunlonely/lustJson/master/docs/lustjson.jpg "lustjson")</div>
+<div align=center><img src="https://raw.githubusercontent.com/aceunlonely/lustJson/master/docs/lustjson.jpg"/></div>
 
 # lustJson
 from apijson  xget and uijson
