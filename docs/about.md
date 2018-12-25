@@ -102,5 +102,18 @@
     you need implement a SexyGril for your lust struct  
 
 6. so it works like:  
-[![avatar](https://raw.githubusercontent.com/aceunlonely/lustJson/master/docs/lustjson-sexygirl.jpg "link to html")](https://aceunlonely.github.io/lustJson/docs/lustjson-sexygirl.html)
+[![avatar](https://raw.githubusercontent.com/aceunlonely/lustJson/master/docs/lustjson-sexygirl.jpg "link to html")](https://aceunlonely.github.io/lustJson/docs/lustjson-sexygirl.html)  
+    sexyGirl is implement for your lust rule  
+    lustjson.js is an engine to traverse all the nodes of lustjson,  
+    find a lust using unimplement methods which will impelement in sexyGirl  
+    and then satisfy the lust using unimplement mehtods which will implement in sexyGirl  
+    and then lustjson will replace the lust with real value  
+    recurse ... util all lust is satisfied  
+    then you will get the final json  
+      
+    lustjson.js is only an engine , and unchanged any all,  
+    then lustjson is your need json,defined by your rule  
+    the sexygirl is the implement for you rule, and changes after your rule changes  
 
+7. then how it works:
+    //todo
