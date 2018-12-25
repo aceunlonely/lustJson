@@ -26,4 +26,6 @@ lustjson.get(json,sxg,options).then(data=>{
 
 ```
 4. more in test  
-5. more complex use in [xget](https://github.com/aceunlonely/xget.git "xget"). 
+5. more complex use in   
+[xget](https://github.com/aceunlonely/xget.git "xget"). 
+[uicli.js](https://github.com/aceunlonely/uicli.js "uicli")

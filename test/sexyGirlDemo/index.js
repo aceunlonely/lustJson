@@ -82,7 +82,9 @@ exports.beforeSatifyOneLust = (lustInfo,options)=>{
     console.log("beforeSatifyOneLust : "  + lustInfo)
 }
 
-exports.afterSatifyOneLust = (lustInfo,options) =>{}
+exports.afterSatifyOneLust = (lustInfo,options) =>{
+    console.log("afterSatifyOneLust:" + lustInfo)
+}
 
 
 // here you can return value or a promise
