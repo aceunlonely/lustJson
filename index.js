@@ -383,17 +383,17 @@ var get = function(lustJson,sxg,options){
                                     },jj)
                                 },jj)
                             }else{
-                                satifyOneLust(firstLustInfo,sxg,options).then(()=>{
+                                satifyOneLust(ele,sxg,options).then(()=>{
                                     if(sxg.afterSatifyOneLust){
-                                        sxg.afterSatifyOneLust(firstLustInfo,options)
+                                        sxg.afterSatifyOneLust(ele,options)
                                     }
                                     rr()
                                 },jj)
                             }
                         }else{
-                            satifyOneLust(firstLustInfo,sxg,options).then(()=>{
+                            satifyOneLust(ele,sxg,options).then(()=>{
                                 if(sxg.afterSatifyOneLust){
-                                    sxg.afterSatifyOneLust(firstLustInfo,options)
+                                    sxg.afterSatifyOneLust(ele,options)
                                 }
                                 rr()
                             },jj)

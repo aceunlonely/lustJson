@@ -117,3 +117,62 @@
 
 7. then how it works:
     //todo
+
+
+8. lust type  
+    lust can be one type of kv , string , an object  
+```js
+{
+    "name" : "LiSA",
+    "age" : {
+                "isLust" : true,
+                "remark" : "here is LiSA's age",
+                 "type" : "number",
+                "default" : 31
+             },
+    "isMan" : "???",
+    "hobbies": ["basketball",{
+                "isLust" : true,
+                "remark" : "here is LiSA's hobby",
+                 "type" : "string"
+                    }],
+    "lover" : {
+        "name" : {
+                "isLust" : true,
+                "remark" : "here is LiSA's lover's hobby",
+                 "type" : "string"
+              },
+        "age" : 28,
+        "hobbies": ["sing","???(string)"],
+        "sister":{
+            "name":"???(string)[luna] what's sis name?",
+            "age" : 28,
+            "isMan": false
+        },
+        "???" : ""
+    },
+    "???": null
+}
+```   
+in this lustjson: 
+object lust is   
+```js
+"age" : {  
+            "isLust" : true,  
+            "remark" : "here is LiSA's age",  
+            "type" : "number",  
+            "default" : 31  
+        }  
+```
+string lust is
+```js
+"hobbies": ["sing","???(string)"]
+```
+or
+```js
+"isMan" : "???",
+```
+kv lust is
+```js
+"???": null
+```
