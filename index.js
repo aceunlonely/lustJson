@@ -334,7 +334,7 @@ var get = function(lustJson,sxg,options){
                         if(pOrNot.then){
                             pOrNot.then(result =>{
                                 if(result.isRemakeLustJson){
-                                    iJson = Object.assign({}, json)
+                                    iJson = Object.assign({}, lustJson)
                                     cylceAllLustSerial(options)
                                 }
                                 else{
@@ -345,7 +345,7 @@ var get = function(lustJson,sxg,options){
                         else
                         {
                             if(pOrNot.isRemakeLustJson){
-                                iJson = Object.assign({}, json)
+                                iJson = Object.assign({}, lustJson)
                                 cylceAllLustSerial(options)
                             }
                             else
@@ -412,7 +412,7 @@ var get = function(lustJson,sxg,options){
                         if(pOrNot.then){
                             pOrNot.then(result =>{
                                 if(result.isRemakeLustJson){
-                                    iJson = Object.assign({}, json)
+                                    iJson = Object.assign({}, lustJson)
                                     cylceAllLustParallel(options)
                                 }
                                 else{
@@ -423,7 +423,7 @@ var get = function(lustJson,sxg,options){
                         else
                         {
                             if(pOrNot.isRemakeLustJson){
-                                iJson = Object.assign({}, json)
+                                iJson = Object.assign({}, lustJson)
                                 cylceAllLustParallel(options)
                             }
                             else

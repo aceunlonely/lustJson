@@ -1,6 +1,6 @@
 {
   "name": "lustjson.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "from apijson  xget and uijson",
   "main": "index.js",
   "scripts": {
