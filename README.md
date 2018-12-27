@@ -19,7 +19,7 @@ like ./sexyGirl
 const lustjson = require('lustjson.js')
 const sxg = require('./sexyGirl')
 
-var options ={}
+var options ={serial:false}
 lustjson.get(json,sxg,options).then(data=>{
     console.log(data)
 })
