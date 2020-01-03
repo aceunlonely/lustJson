@@ -3,6 +3,9 @@
 # lustJson
 from apijson  xget and uijson
 
+# phil(哲学)
+[phil](./phil.md)
+
 #  what is lustjson
 details at [about.md](https://github.com/aceunlonely/lustJson/blob/master/docs/about.md "about")
 
