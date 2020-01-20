@@ -32,3 +32,6 @@ lustjson.get(json,sxg,options).then(data=>{
 5. more complex use in   
 [xget](https://github.com/aceunlonely/xget.git "xget"). 
 [uicli.js](https://github.com/aceunlonely/uicli.js "uicli")
+
+6. here is unimplement sexyGril for [ilink.js](https://github.com/apporoad/ilink)
+[./sexGirl/unimplement.js]
