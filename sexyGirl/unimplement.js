@@ -41,6 +41,19 @@ exports.isLustForKV = (k,v,options)=>{ return k === "???" }
 exports.getLustForKV = (k,v,options) => { return {}}
 
 /**
+ * is the node of other  a lust , example :  ()=>{}
+ * 判断json中的节点是否是lust
+ */
+exports.isLustForOthers= (k,v,options)=>{ return k === "???" }
+
+/**
+ * get lustInfo from node of json when isLustForOthers is true
+ * 获取lust 
+ */
+exports.getLustForOthers= (k,v,options) => { return {}}
+
+
+/**
  * 满足一个lust节点前触发行为 
  */
 exports.beforeSatifyOneLust = (lustInfo,options)=>{}
