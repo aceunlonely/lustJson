@@ -10,6 +10,9 @@ var lustjson ={
                  "type" : "number",
                 "default" : 31
              },
+    "fun" : ()=>{},
+    "reg" : /a/g,
+    "promise" : new Promise(r=>r(1)),
     "isMan" : "???",
     "hobbies": ["basketball",{
                 "isLust" : true,
@@ -36,14 +39,14 @@ var lustjson ={
 
 
 // test serial
-// lustjsonJs.get(lustjson,sexyGirl,{serial:true}).then(finalJson=>{
-//     console.log("+++++++++++++++++++++++++++++++++++++++++++++++")
-//     console.log(finalJson)
-// })
+lustjsonJs.get(lustjson,sexyGirl,{serial:true}).then(finalJson=>{
+    console.log("+++++++++++++++++++++++++++++++++++++++++++++++")
+    console.log(finalJson)
+})
 
 
 // test parallel
-lustjsonJs.get(lustjson,sexyGirl,{serial:false}).then(finalJson=>{
-    console.log("================================================")
-    console.log(finalJson)
-})
+// lustjsonJs.get(lustjson,sexyGirl,{serial:false}).then(finalJson=>{
+//     console.log("================================================")
+//     console.log(finalJson)
+// })

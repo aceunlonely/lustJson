@@ -77,6 +77,18 @@ exports.getLustForKV = (k,v,options) => {
     return null;
 }
 
+exports.isLustForOthers = (obj,options) =>{
+    return typeof  obj  == 'function'
+}
+
+exports.getLustForOthers =(obj,options)=>{
+    console.log( typeof  obj)
+    return  {
+        isLust : false,
+        fuck : "you"
+    }
+} 
+
 
 exports.beforeSatifyOneLust = (lustInfo,options)=>{
     console.log("beforeSatifyOneLust : "  + lustInfo)
@@ -114,9 +126,10 @@ exports.getInputOneLustValue = (lustInfo,lastData,options) =>{
     if(lustInfo.hello == "good day"){
         return "goodDay" + (order++)
     }
-    else{
+    else {
         return "goodGoodDay" + (order++)
     }
+
 
     // or a promise
 }
