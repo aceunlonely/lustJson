@@ -20,7 +20,7 @@ lust.LJ.isKey ： lust是否是 kv 中的 k
  * @param {*} sxg 
  * @param {*} options  { findOne : false}  需要找1个时采用findOne： true
  * */
-var getLusts = function(json,dotTree,fJson,fKey,sxg,options){
+var getLusts =async (json,dotTree,fJson,fKey,sxg,options) => {
     if(!json) return []
     if(!sxg) return []
     var lustArray = new Array()
@@ -64,14 +64,17 @@ var getLusts = function(json,dotTree,fJson,fKey,sxg,options){
                 }
                 else
                 {
-                    var r = getLusts(arrayOne,(dotTree ? (dotTree + "["+ i + "]") : ('[' + i +']')),json,i,sxg,options)
+                    var r = await getLusts(arrayOne,(dotTree ? (dotTree + "["+ i + "]") : ('[' + i +']')),json,i,sxg,options)
                     if(r!= null)
                         lustArray = lustArray.concat(r)
                 }
             }else if(util.Type.isArray(arrayOne)){
-                var r = getLusts(arrayOne,(dotTree ? (dotTree + "["+ i + "]") : ('[' + i +']')),json,i,sxg,options)
+                var r = await getLusts(arrayOne,(dotTree ? (dotTree + "["+ i + "]") : ('[' + i +']')),json,i,sxg,options)
                 if(r!= null)
                     lustArray = lustArray.concat(r)
+            }
+            else{
+                //todo others
             }
             //find one
             if(options && options.findOne && lustArray.length > 0){
@@ -116,7 +119,7 @@ var getLusts = function(json,dotTree,fJson,fKey,sxg,options){
             }
             // is Array
             else if(util.Type.isArray(value)){
-                var r = getLusts(value,( dotTree ? (dotTree + "." + key) : key),json,key,sxg,options)
+                var r = await getLusts(value,( dotTree ? (dotTree + "." + key) : key),json,key,sxg,options)
                 if(r!= null)
                     lustArray = lustArray.concat(r)
             }
@@ -140,10 +143,12 @@ var getLusts = function(json,dotTree,fJson,fKey,sxg,options){
                 }
                 else
                 {
-                    var r = getLusts(value,( dotTree ? (dotTree + "." + key) : key),json,key,sxg,options)
+                    var r = await getLusts(value,( dotTree ? (dotTree + "." + key) : key),json,key,sxg,options)
                     if(r!= null)
                         lustArray = lustArray.concat(r)
                 }
+            }else{
+                //todo others
             }
             if(options && options.findOne && lustArray.length>0)
                 return lustArray
@@ -289,8 +294,8 @@ var get = function(lustJson,sxg,options){
     return new Promise(function(r,j){
 
         //serial
-        function cylceAllLustSerial(options){
-            var firstLustInfo = getLusts(iJson,null,null,null,sxg,options)
+        var cylceAllLustSerial = async (options)=>{
+            var firstLustInfo = await getLusts(iJson,null,null,null,sxg,options)
             if(firstLustInfo.length >0){
                 firstLustInfo = firstLustInfo[0]
                 if(sxg.beforeSatifyOneLust){
@@ -362,11 +367,11 @@ var get = function(lustJson,sxg,options){
                     r(iJson)
                 }
             }
+            return
         }
-
         //parallel
-        function cylceAllLustParallel(options){
-            var lustInfos = getLusts(iJson,null,null,null,sxg,options)
+        var cylceAllLustParallel = async (options) => {
+            var lustInfos =await getLusts(iJson,null,null,null,sxg,options)
             if(lustInfos.length >0){
                 util.promiseAllArray(lustInfos,ele=>{
                     return new Promise((rr,jj)=>{
@@ -440,7 +445,7 @@ var get = function(lustJson,sxg,options){
                     r(iJson)
                 }
             }
-
+            return
         }
 
         //是否串行 is Serial 默认并行

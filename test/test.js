@@ -36,10 +36,10 @@ var lustjson ={
 
 
 // test serial
-lustjsonJs.get(lustjson,sexyGirl,{serial:true}).then(finalJson=>{
-    console.log("+++++++++++++++++++++++++++++++++++++++++++++++")
-    console.log(finalJson)
-})
+// lustjsonJs.get(lustjson,sexyGirl,{serial:true}).then(finalJson=>{
+//     console.log("+++++++++++++++++++++++++++++++++++++++++++++++")
+//     console.log(finalJson)
+// })
 
 
 // test parallel

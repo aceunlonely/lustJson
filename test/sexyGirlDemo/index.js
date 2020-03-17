@@ -1,6 +1,6 @@
 
 
-
+var order = 1
 /**
  * here 
  */
@@ -112,10 +112,10 @@ exports.afterSatifyAllLust = (lustJson,options) =>{
 exports.getInputOneLustValue = (lustInfo,lastData,options) =>{
     
     if(lustInfo.hello == "good day"){
-        return "goodDay"
+        return "goodDay" + (order++)
     }
     else{
-        return "goodGoodDay"
+        return "goodGoodDay" + (order++)
     }
 
     // or a promise
