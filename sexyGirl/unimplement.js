@@ -14,7 +14,7 @@ exports.isLustForString = (str,options) =>{ return false }
  * get lustInfo from String when isLustForString is true
  * 获取lust from String
  */
-exports.getLustForString = function(str,options){ return {} }
+exports.getLustForString = function(str,options, innerLJ){ return {} }
 
 /**
  * is the Object in Arry a lust  ,example : [{ isLust: true, hello: ' world'}]
@@ -26,7 +26,7 @@ exports.isLustForObject = (obj,options) =>{ return false }
  * get lustInfo from Object when isLustForObject is true
  * 获取lust from Object
  */
-exports.getLustForObject =(obj,options)=>{ return {} } 
+exports.getLustForObject =(obj,options,innerLJ)=>{ return {} } 
 
 /**
  * is the node of json  a lust , example : { '???':{ 'hello': 'world'}}
@@ -38,19 +38,19 @@ exports.isLustForKV = (k,v,options)=>{ return k === "???" }
  * get lustInfo from node of json when isLustForKV is true
  * 获取lust 
  */
-exports.getLustForKV = (k,v,options) => { return {}}
+exports.getLustForKV = (k,v,options,innerLJ) => { return {}}
 
 /**
  * is the node of other  a lust , example :  ()=>{}
  * 判断json中的节点是否是lust
  */
-exports.isLustForOthers= (k,v,options)=>{ return k === "???" }
+exports.isLustForOthers= (obj,options)=>{ return k === "???" }
 
 /**
  * get lustInfo from node of json when isLustForOthers is true
  * 获取lust 
  */
-exports.getLustForOthers= (k,v,options) => { return {}}
+exports.getLustForOthers= (obj,options,innerLJ) => { return {}}
 
 
 /**

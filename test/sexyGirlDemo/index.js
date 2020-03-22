@@ -153,6 +153,7 @@ exports.getInputOneLustValue = (lustInfo,lastData,options) =>{
  */
 exports.validateOneLustInfo = (value,lustInfo,lastData,options) =>{
     //kv lust
+    // console.log(lustInfo)
     if(lustInfo.LJ.isKey){
         return {
             isPass:true,
