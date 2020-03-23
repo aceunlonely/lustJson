@@ -40,8 +40,8 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = null
-                if (sxg.isLustForString && sxg.getLustForString && await sxg.isLustForString(arrayOne, options,r)) {
-                    r.value= await sxg.getLustForString(arrayOne, options,r)
+                if (sxg.isLustForString && sxg.getLustForString && await Promise.resolve(sxg.isLustForString(arrayOne, options,r))) {
+                    r.value= await Promise.resolve(sxg.getLustForString(arrayOne, options,r))
                     lustArray.push(r)
                 }
             } else if (util.Type.isObject(arrayOne)) {
@@ -57,9 +57,9 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fKey = fKey
                 r.LJ.key = null
                 //if is lust， return lust
-                if (sxg.isLustForObject && await sxg.isLustForObject(arrayOne, options,r)) {
+                if (sxg.isLustForObject && await Promise.resolve(sxg.isLustForObject(arrayOne, options,r))) {
                     if (sxg.getLustForObject) {
-                        r.value = await sxg.getLustForObject(arrayOne, options,r) || arrayOne
+                        r.value = await Promise.resolve(sxg.getLustForObject(arrayOne, options,r)) || arrayOne
                     }
                     lustArray.push(r)
                 }
@@ -85,8 +85,8 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fKey = fKey
                 r.LJ.key = null
                 //others
-                if (sxg.isLustForOthers && sxg.getLustForOthers && await sxg.isLustForOthers(arrayOne, options,r)) {
-                    r .value= await sxg.getLustForOthers(arrayOne, options,r)
+                if (sxg.isLustForOthers && sxg.getLustForOthers && await Promise.resolve(sxg.isLustForOthers(arrayOne, options,r))) {
+                    r .value= await Promise.resolve(sxg.getLustForOthers(arrayOne, options,r))
                     lustArray.push(r)
                 }
             }
@@ -108,8 +108,8 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
             r.LJ.key = key
             r.LJ.object = json
             r.LJ.dotTree = (dotTree ? (dotTree + ".???") : "???")
-            if (sxg.isLustForKV && await sxg.isLustForKV(key, value, options,r)) {
-                r.value = await sxg.getLustForKV(key, value, options,r)
+            if (sxg.isLustForKV && await Promise.resolve(sxg.isLustForKV(key, value, options,r))) {
+                r.value = await Promise.resolve(sxg.getLustForKV(key, value, options,r))
                 lustArray.push(r)
             }
             // is String
@@ -124,8 +124,8 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = key
-                if (sxg.isLustForString && sxg.getLustForString && await sxg.isLustForString(value, options,r)) {
-                    r.value = await sxg.getLustForString(value, options,r)
+                if (sxg.isLustForString && sxg.getLustForString && await Promise.resolve(sxg.isLustForString(value, options,r))) {
+                    r.value = await Promise.resolve(sxg.getLustForString(value, options,r))
                     lustArray.push(r)
                 }
             }
@@ -148,9 +148,9 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = key
-                if (sxg.isLustForObject && await sxg.isLustForObject(value, options,r)) {
+                if (sxg.isLustForObject && await Promise.resolve(sxg.isLustForObject(value, options,r))) {
                     if (sxg.getLustForObject) {
-                        r .value= await sxg.getLustForObject(value, options,r) || value
+                        r .value= await Promise.resolve(sxg.getLustForObject(value, options,r)) || value
                     }
                     lustArray.push(r)
                 }
@@ -171,9 +171,9 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = key
-                if (sxg.isLustForOthers && sxg.getLustForOthers && await sxg.isLustForOthers(value, options,r)) {
+                if (sxg.isLustForOthers && sxg.getLustForOthers && await Promise.resolve(sxg.isLustForOthers(value, options,r))) {
 
-                    r.value = await sxg.getLustForOthers(value, options,r)
+                    r.value = await Promise.resolve(sxg.getLustForOthers(value, options,r))
                     lustArray.push(r)
                 }
             }
