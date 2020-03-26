@@ -288,7 +288,7 @@ var satifyOneLust = function (lustInfo, sxg, options) {
                 //var cr =lust.checkAndUpdateValueByLustInfo(data,lustInfo,lastData)
 
             }
-            if (dataOrPromise.then) {
+            if (dataOrPromise && dataOrPromise.then) {
                 dataOrPromise.then(data => {
                     inputHandler(data)
                 })
