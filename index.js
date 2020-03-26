@@ -30,36 +30,36 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
             var arrayOne = json[i]
 
             if (util.Type.isString(arrayOne)) {
-                if (sxg.isLustForString && sxg.getLustForString && await sxg.isLustForString(arrayOne, options)) {
-                    var r = {}
-                    r.LJ = r.LJ || {}
-                    r.LJ.isKey = false
-                    r.LJ.isArray = true
-                    r.LJ.object = json
-                    r.LJ.index = i
-                    r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
-                    r.LJ.fJson = fJson
-                    r.LJ.fKey = fKey
-                    r.LJ.key = null
-                    r.value= await sxg.getLustForString(arrayOne, options,r)
+                var r = {}
+                r.LJ = r.LJ || {}
+                r.LJ.isKey = false
+                r.LJ.isArray = true
+                r.LJ.object = json
+                r.LJ.index = i
+                r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
+                r.LJ.fJson = fJson
+                r.LJ.fKey = fKey
+                r.LJ.key = null
+                if (sxg.isLustForString && sxg.getLustForString && await Promise.resolve(sxg.isLustForString(arrayOne, options,r))) {
+                    r.value= await Promise.resolve(sxg.getLustForString(arrayOne, options,r))
                     lustArray.push(r)
                 }
             } else if (util.Type.isObject(arrayOne)) {
+                var r = {}
+                r.value = arrayOne
+                r.LJ = r.LJ || {}
+                r.LJ.isArray = true
+                r.LJ.isKey = false
+                r.LJ.object = json
+                r.LJ.index = i
+                r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
+                r.LJ.fJson = fJson
+                r.LJ.fKey = fKey
+                r.LJ.key = null
                 //if is lust， return lust
-                if (sxg.isLustForObject && await sxg.isLustForObject(arrayOne, options)) {
-                    var r = {}
-                    r.value = arrayOne
-                    r.LJ = r.LJ || {}
-                    r.LJ.isArray = true
-                    r.LJ.isKey = false
-                    r.LJ.object = json
-                    r.LJ.index = i
-                    r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
-                    r.LJ.fJson = fJson
-                    r.LJ.fKey = fKey
-                    r.LJ.key = null
+                if (sxg.isLustForObject && await Promise.resolve(sxg.isLustForObject(arrayOne, options,r))) {
                     if (sxg.getLustForObject) {
-                        r.value = await sxg.getLustForObject(arrayOne, options,r) || arrayOne
+                        r.value = await Promise.resolve(sxg.getLustForObject(arrayOne, options,r)) || arrayOne
                     }
                     lustArray.push(r)
                 }
@@ -74,19 +74,19 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                     lustArray = lustArray.concat(r)
             }
             else {
+                var r = {}
+                r.LJ = r.LJ || {}
+                r.LJ.isKey = false
+                r.LJ.isArray = true
+                r.LJ.object = json
+                r.LJ.index = i
+                r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
+                r.LJ.fJson = fJson
+                r.LJ.fKey = fKey
+                r.LJ.key = null
                 //others
-                if (sxg.isLustForOthers && sxg.getLustForOthers && await sxg.isLustForOthers(arrayOne, options)) {
-                    var r = {}
-                    r.LJ = r.LJ || {}
-                    r.LJ.isKey = false
-                    r.LJ.isArray = true
-                    r.LJ.object = json
-                    r.LJ.index = i
-                    r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
-                    r.LJ.fJson = fJson
-                    r.LJ.fKey = fKey
-                    r.LJ.key = null
-                    r .value= await sxg.getLustForOthers(arrayOne, options,r)
+                if (sxg.isLustForOthers && sxg.getLustForOthers && await Promise.resolve(sxg.isLustForOthers(arrayOne, options,r))) {
+                    r .value= await Promise.resolve(sxg.getLustForOthers(arrayOne, options,r))
                     lustArray.push(r)
                 }
             }
@@ -102,30 +102,30 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
             // name: '???(string)[rue]这里填写你的名字'
             var value = json[key]
             // '???': null
-            if (sxg.isLustForKV && await sxg.isLustForKV(key, value, options)) {
-                var r ={}
-                r.LJ = r.LJ || {}
-                r.LJ.isKey = true
-                r.LJ.key = key
-                r.LJ.object = json
-                r.LJ.dotTree = (dotTree ? (dotTree + ".???") : "???")
-                r.value = await sxg.getLustForKV(key, value, options,r)
+            var r ={}
+            r.LJ = r.LJ || {}
+            r.LJ.isKey = true
+            r.LJ.key = key
+            r.LJ.object = json
+            r.LJ.dotTree = (dotTree ? (dotTree + ".???") : "???")
+            if (sxg.isLustForKV && await Promise.resolve(sxg.isLustForKV(key, value, options,r))) {
+                r.value = await Promise.resolve(sxg.getLustForKV(key, value, options,r))
                 lustArray.push(r)
             }
             // is String
             else if (util.Type.isString(value)) {
-                if (sxg.isLustForString && sxg.getLustForString && await sxg.isLustForString(value, options)) {
-                    var r = {}
-                    r.LJ = r.LJ || {}
-                    r.LJ.isKey = false
-                    r.LJ.isArray = false
-                    r.LJ.object = json
-                    r.LJ.index = i
-                    r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
-                    r.LJ.fJson = fJson
-                    r.LJ.fKey = fKey
-                    r.LJ.key = key
-                    r.value = await sxg.getLustForString(value, options,r)
+                var r = {}
+                r.LJ = r.LJ || {}
+                r.LJ.isKey = false
+                r.LJ.isArray = false
+                r.LJ.object = json
+                r.LJ.index = i
+                r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
+                r.LJ.fJson = fJson
+                r.LJ.fKey = fKey
+                r.LJ.key = key
+                if (sxg.isLustForString && sxg.getLustForString && await Promise.resolve(sxg.isLustForString(value, options,r))) {
+                    r.value = await Promise.resolve(sxg.getLustForString(value, options,r))
                     lustArray.push(r)
                 }
             }
@@ -137,20 +137,20 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
             }
             else if (util.Type.isObject(value)) {
                 //if is lust， return lust
-                if (sxg.isLustForObject && await sxg.isLustForObject(value, options)) {
-                    var r = {}
-                    r.value= value
-                    r.LJ = r.LJ || {}
-                    r.LJ.isArray = false
-                    r.LJ.isKey = false
-                    r.LJ.object = json
-                    r.LJ.index = 0
-                    r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
-                    r.LJ.fJson = fJson
-                    r.LJ.fKey = fKey
-                    r.LJ.key = key
+                var r = {}
+                r.value= value
+                r.LJ = r.LJ || {}
+                r.LJ.isArray = false
+                r.LJ.isKey = false
+                r.LJ.object = json
+                r.LJ.index = 0
+                r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
+                r.LJ.fJson = fJson
+                r.LJ.fKey = fKey
+                r.LJ.key = key
+                if (sxg.isLustForObject && await Promise.resolve(sxg.isLustForObject(value, options,r))) {
                     if (sxg.getLustForObject) {
-                        r .value= await sxg.getLustForObject(value, options,r) || value
+                        r .value= await Promise.resolve(sxg.getLustForObject(value, options,r)) || value
                     }
                     lustArray.push(r)
                 }
@@ -161,18 +161,19 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 }
             } else {
                 //others
-                if (sxg.isLustForOthers && sxg.getLustForOthers && await sxg.isLustForOthers(value, options)) {
-                    var r = {}
-                    r.LJ = r.LJ || {}
-                    r.LJ.isKey = false
-                    r.LJ.isArray = false
-                    r.LJ.object = json
-                    r.LJ.index = i
-                    r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
-                    r.LJ.fJson = fJson
-                    r.LJ.fKey = fKey
-                    r.LJ.key = key
-                    r.value = await sxg.getLustForOthers(value, options,r)
+                var r = {}
+                r.LJ = r.LJ || {}
+                r.LJ.isKey = false
+                r.LJ.isArray = false
+                r.LJ.object = json
+                r.LJ.index = i
+                r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
+                r.LJ.fJson = fJson
+                r.LJ.fKey = fKey
+                r.LJ.key = key
+                if (sxg.isLustForOthers && sxg.getLustForOthers && await Promise.resolve(sxg.isLustForOthers(value, options,r))) {
+
+                    r.value = await Promise.resolve(sxg.getLustForOthers(value, options,r))
                     lustArray.push(r)
                 }
             }
