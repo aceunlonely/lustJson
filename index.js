@@ -9,6 +9,7 @@ lust.LJ.fJson  父json对象
 lust.LJ.fKey  object所在父json的键值
 lust.LJ.key   objcet所属的key 值 ，只有 出现在 lust在kv中的v时  及    xxx : "???" 这种情况时  ？？？ 代表lust
 lust.LJ.isKey ： lust是否是 kv 中的 k
+lust.LJ.root  lustJson根对象
 */
 
 /**
@@ -21,6 +22,9 @@ lust.LJ.isKey ： lust是否是 kv 中的 k
  * @param {*} options  { findOne : false}  需要找1个时采用findOne： true
  * */
 var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
+    if(!options.root){
+        options.root = json
+    }
     if (!json) return []
     if (!sxg) return []
     var lustArray = new Array()
@@ -40,6 +44,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = null
+                r.LJ.root = options.root
                 if (sxg.isLustForString && sxg.getLustForString && await Promise.resolve(sxg.isLustForString(arrayOne, options,r))) {
                     r.value= await Promise.resolve(sxg.getLustForString(arrayOne, options,r))
                     lustArray.push(r)
@@ -56,6 +61,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = null
+                r.LJ.root = options.root
                 //if is lust， return lust
                 if (sxg.isLustForObject && await Promise.resolve(sxg.isLustForObject(arrayOne, options,r))) {
                     if (sxg.getLustForObject) {
@@ -84,6 +90,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = null
+                r.LJ.root = options.root
                 //others
                 if (sxg.isLustForOthers && sxg.getLustForOthers && await Promise.resolve(sxg.isLustForOthers(arrayOne, options,r))) {
                     r .value= await Promise.resolve(sxg.getLustForOthers(arrayOne, options,r))
@@ -104,6 +111,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
             // '???': null
             var r ={}
             r.LJ = r.LJ || {}
+            r.LJ.root = options.root
             r.LJ.isKey = true
             r.LJ.key = key
             r.LJ.object = json
@@ -124,6 +132,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = key
+                r.LJ.root = options.root
                 if (sxg.isLustForString && sxg.getLustForString && await Promise.resolve(sxg.isLustForString(value, options,r))) {
                     r.value = await Promise.resolve(sxg.getLustForString(value, options,r))
                     lustArray.push(r)
@@ -148,6 +157,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = key
+                r.LJ.root = options.root
                 if (sxg.isLustForObject && await Promise.resolve(sxg.isLustForObject(value, options,r))) {
                     if (sxg.getLustForObject) {
                         r .value= await Promise.resolve(sxg.getLustForObject(value, options,r)) || value
@@ -171,6 +181,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.fJson = fJson
                 r.LJ.fKey = fKey
                 r.LJ.key = key
+                r.LJ.root = options.root
                 if (sxg.isLustForOthers && sxg.getLustForOthers && await Promise.resolve(sxg.isLustForOthers(value, options,r))) {
 
                     r.value = await Promise.resolve(sxg.getLustForOthers(value, options,r))
