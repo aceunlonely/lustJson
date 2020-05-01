@@ -20,14 +20,20 @@ lust.LJ.root  lustJson根对象
  * @param {*} fKey 
  * @param {*} sxg 
  * @param {*} options  { findOne : false}  需要找1个时采用findOne： true
+ * @param {*} fnodes 父亲节点们 [ doTree : '' ,  node : {...}]
  * */
-var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
+var getLusts = async (json, dotTree, fJson, fKey, sxg, options ,fnodes) => {
     if(!options.root){
         options.root = json
     }
     if (!json) return []
     if (!sxg) return []
+    fnodes = fnodes || []
     var lustArray = new Array()
+    if(fnodes.length > 1154){
+        console.log('LustJson error :  your lustJson deep cannot gt 1154' )
+        return lustArray
+    }
     //json must be arry or json
     if (util.Type.isArray(json)) {
         for (var i = 0; i < json.length; i++) {
@@ -42,6 +48,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.index = i
                 r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
                 r.LJ.fJson = fJson
+                r.LJ.fnodes = fnodes
                 r.LJ.fKey = fKey
                 r.LJ.key = null
                 r.LJ.root = options.root
@@ -59,6 +66,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.index = i
                 r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
                 r.LJ.fJson = fJson
+                r.LJ.fnodes = fnodes
                 r.LJ.fKey = fKey
                 r.LJ.key = null
                 r.LJ.root = options.root
@@ -70,12 +78,19 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                     lustArray.push(r)
                 }
                 else {
-                    var r = await getLusts(arrayOne, (dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']')), json, i, sxg, options)
+                    var dtree =  (dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'))
+                    fnodes.push({
+                        dotTree : dtree,
+                        node : json
+                    })
+                    var r = await getLusts(arrayOne, dtree, json, i, sxg, options , fnodes)
                     if (r != null)
                         lustArray = lustArray.concat(r)
                 }
             } else if (util.Type.isArray(arrayOne)) {
-                var r = await getLusts(arrayOne, (dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']')), json, i, sxg, options)
+                var dtree =  (dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'))
+                fnodes.push({ dotTree : dtree , node : json})
+                var r = await getLusts(arrayOne, dtree, json, i, sxg, options , fnodes)
                 if (r != null)
                     lustArray = lustArray.concat(r)
             }
@@ -88,6 +103,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.index = i
                 r.LJ.dotTree = dotTree ? (dotTree + "[" + i + "]") : ('[' + i + ']'),
                 r.LJ.fJson = fJson
+                r.LJ.fnodes = fnodes
                 r.LJ.fKey = fKey
                 r.LJ.key = null
                 r.LJ.root = options.root
@@ -116,6 +132,8 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
             r.LJ.key = key
             r.LJ.object = json
             r.LJ.dotTree = (dotTree ? (dotTree + ".???") : "???")
+            r.LJ.fJson = fJson  // 未验证
+            r.LJ.fnodes = fnodes
             if (sxg.isLustForKV && await Promise.resolve(sxg.isLustForKV(key, value, options,r))) {
                 r.value = await Promise.resolve(sxg.getLustForKV(key, value, options,r))
                 lustArray.push(r)
@@ -130,6 +148,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.index = i
                 r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
                 r.LJ.fJson = fJson
+                r.LJ.fnodes = fnodes
                 r.LJ.fKey = fKey
                 r.LJ.key = key
                 r.LJ.root = options.root
@@ -140,7 +159,9 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
             }
             // is Array
             else if (util.Type.isArray(value)) {
-                var r = await getLusts(value, (dotTree ? (dotTree + "." + key) : key), json, key, sxg, options)
+                var dtree = (dotTree ? (dotTree + "." + key) : key)
+                fnodes.push({dotTree : dtree, node : json})
+                var r = await getLusts(value, dtree, json, key, sxg, options,fnodes)
                 if (r != null)
                     lustArray = lustArray.concat(r)
             }
@@ -155,6 +176,7 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.index = 0
                 r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
                 r.LJ.fJson = fJson
+                r.LJ.fnodes = fnodes
                 r.LJ.fKey = fKey
                 r.LJ.key = key
                 r.LJ.root = options.root
@@ -165,7 +187,9 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                     lustArray.push(r)
                 }
                 else {
-                    var r = await getLusts(value, (dotTree ? (dotTree + "." + key) : key), json, key, sxg, options)
+                    var dtree =  (dotTree ? (dotTree + "." + key) : key)
+                    fnodes.push({dotTree : dtree, node : json})
+                    var r = await getLusts(value, dtree, json, key, sxg, options, fnodes)
                     if (r != null)
                         lustArray = lustArray.concat(r)
                 }
@@ -179,11 +203,11 @@ var getLusts = async (json, dotTree, fJson, fKey, sxg, options) => {
                 r.LJ.index = i
                 r.LJ.dotTree = dotTree ? (dotTree + "." + key) : key
                 r.LJ.fJson = fJson
+                r.LJ.fnodes = fnodes
                 r.LJ.fKey = fKey
                 r.LJ.key = key
                 r.LJ.root = options.root
                 if (sxg.isLustForOthers && sxg.getLustForOthers && await Promise.resolve(sxg.isLustForOthers(value, options,r))) {
-
                     r.value = await Promise.resolve(sxg.getLustForOthers(value, options,r))
                     lustArray.push(r)
                 }
